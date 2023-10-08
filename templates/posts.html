@@ -1,0 +1,38 @@
+<!--  наследуемся от шаблона default.html, который мы создавали для flatpages -->
+{% extends 'flatpages/default.html' %}
+
+<!--{% load custom_filters %}-->
+<!--{% load custom_tags %}-->
+
+{% block title %}
+Posts
+{% endblock title %}
+
+<!-- Название у нас будет articles -->
+{% block content %}
+<h1>ВСЕ СТАТЬИ</h1>
+   <h3> Количество статей:</h3>
+   <h3>{{ posts|length }}</h3>
+   <h3>{% current_time '%b %d %Y %A' %}</h3>
+
+   <hr>
+      {% if posts %}
+          <table>
+              <tr>
+                  <td> <h3><strong>Название статьи&nbsp;&nbsp;&nbsp;&nbsp;</strong></h3> </td>
+                  <td> <h3><strong>Дата публикации</strong></h3> </td>
+                  <td> <h3><strong>Описание</strong></h3> </td>
+              </tr>
+
+             {% for post in posts %}
+           <tr>
+               <td>{{ post.title }}</td>
+               <td>{{ post.created_date|date:'M d Y' }}</td>
+               <td>{{ post.text|truncatewords:20|censor }}</td>
+           </tr>
+           {% endfor %}
+          </table>
+      {% else %}
+       <h2>СТАТЕЙ НЕТ!</h2>
+   {% endif %}
+{% endblock content %}
